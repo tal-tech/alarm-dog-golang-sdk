@@ -1,0 +1,53 @@
+package channel
+
+import "github.com/cheekybits/genny/generic"
+
+const defaultChannelTypeChannelName = "ChannelType"
+
+// NOTE: this is how easy it is to define a generic type
+type ChannelType generic.Type
+
+// ChannelType struct
+type ChannelType struct {
+	Channel    string
+	Attributes UidsType
+}
+
+// NewChannelType is used to init robots
+func NewChannelType(uids UidsType) *ChannelType {
+	return &ChannelType{
+		Channel:    defaultChannelTypeChannelName,
+		Attributes: uids,
+	}
+}
+
+// AddUID add a robot
+func (dw *ChannelType) AddUID(uid int) *ChannelType {
+	dw.Attributes = append(dw.Attributes, uid)
+	return dw
+}
+
+// AddUIDs add robots
+func (dw *ChannelType) AddUIDs(uids UidsType, replace bool) *ChannelType {
+	if replace {
+		dw.Attributes = uids
+	} else {
+		dw.Attributes = append(dw.Attributes, uids...)
+	}
+	return dw
+}
+
+// GetChannel get channel
+func (dw *ChannelType) GetChannel() string {
+	return dw.Channel
+}
+
+// GetAttributes get attributes
+func (dw *ChannelType) GetAttributes() []interface{} {
+	ret := make([]interface{}, len(dw.Attributes))
+	for i := 0; i < len(dw.Attributes); i++ {
+		ret[i] = dw.Attributes[i]
+
+	}
+	return ret
+}

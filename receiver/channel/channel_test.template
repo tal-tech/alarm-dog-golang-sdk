@@ -1,0 +1,63 @@
+package channel
+
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
+
+// NOTE: this is how easy it is to define a generic type
+type ChannelType generic.Type
+
+func TestChannelType_AddUID(t *testing.T) {
+	attributes := UidsType{
+		1,
+		2,
+	}
+	dw := NewChannelType(attributes)
+	dw.AddUID(3)
+	assert.Len(t, dw.GetAttributes(), 3)
+}
+
+func TestChannelType_AddUIDs(t *testing.T) {
+	attributes := UidsType{
+		1,
+		2,
+	}
+	dw := NewChannelType(attributes)
+	uids := UidsType{
+		3,
+		4,
+	}
+	dw.AddUIDs(uids, false)
+	assert.Len(t, dw.GetAttributes(), 4)
+}
+
+func TestChannelType_AddUIDsWithReplace(t *testing.T) {
+	attributes := UidsType{
+		1,
+		2,
+	}
+	dw := NewChannelType(attributes)
+	uids := UidsType{
+		3,
+		4,
+	}
+	dw.AddUIDs(uids, true)
+	assert.Len(t, dw.GetAttributes(), 2)
+}
+
+func TestChannelType_GetChannel(t *testing.T) {
+	attributes := UidsType{}
+	dw := NewChannelType(attributes)
+	assert.Equal(t, defaultChannelTypeChannelName, dw.GetChannel())
+}
+
+func TestChannelType_GetAttributes(t *testing.T) {
+	attributes := UidsType{
+		1,
+		2,
+	}
+	dw := NewChannelType(attributes)
+	assert.Len(t, dw.GetAttributes(), 2)
+}
